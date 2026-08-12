@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running Royals Cross Country Practice Schedule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --royal-deep:#0E2358;
+    --royal:#1E47A8;
+    --royal-light:#5A7FD6;
+    --gold:#E4B23C;
+    --gold-deep:#B98511;
+    --parchment:#FBF7EC;
+    --ink:#14192B;
+    --rule:rgba(14,35,88,.16);
+    --k-hills:#C0651B;
+    --k-tempo:#1E47A8;
+    --k-track:#0F7A72;
+    --k-distance:#3D7A34;
+    --k-shake:#7A5EA8;
+    --k-recovery:#8A8FA3;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--parchment);color:var(--ink);font-family:"Barlow",system-ui,sans-serif;font-size:16px;line-height:1.45}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px 72px}
+
+  .crest{background:var(--royal-deep);color:#fff;padding:44px 20px 0;position:relative;overflow:hidden}
+  .crest::after{content:"";position:absolute;inset:auto 0 0 0;height:8px;background:repeating-linear-gradient(90deg,var(--gold) 0 28px,var(--royal) 28px 56px)}
+  .crest-inner{max-width:1180px;margin:0 auto;padding-bottom:40px}
+  .eyebrow{font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.22em;font-weight:600;font-size:.75rem;color:var(--gold);margin:0 0 14px}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:900;font-size:clamp(2.6rem,8vw,5.2rem);line-height:.92;margin:0;letter-spacing:-.02em}
+  h1 em{display:block;font-style:normal;color:var(--gold)}
+  .season{font-family:"Barlow Semi Condensed",sans-serif;font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 0;color:var(--royal-light);font-weight:600}
+
+  .ritual{background:#fff;border:1px solid var(--rule);border-left:6px solid var(--gold);padding:18px 22px;margin:32px 0 8px;border-radius:2px}
+  .ritual h2{font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:.78rem;margin:0 0 8px;color:var(--royal)}
+  .ritual p{margin:0;font-size:1.02rem}
+  .ritual strong{color:var(--royal-deep)}
+
+  .pennants{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 10px}
+  .pennant{position:relative;color:#fff;padding:20px 20px 34px;clip-path:polygon(0 0,100% 0,100% 100%,50% 88%,0 100%)}
+  .pennant.p-jr{background:var(--royal-light)}
+  .pennant.p-ch{background:var(--royal)}
+  .pennant.p-fa{background:var(--royal-deep)}
+  .pennant .grade{font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:var(--gold);font-weight:600}
+  .pennant .name{font-family:"Fraunces",serif;font-weight:700;font-size:1.7rem;line-height:1.05;margin:4px 0 6px}
+  .pennant .note{font-size:.88rem;color:rgba(255,255,255,.86);line-height:1.35}
+
+  .legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:26px 0 0;padding:14px 18px;background:#fff;border:1px solid var(--rule);border-radius:2px}
+  .legend b{font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:var(--royal);font-weight:600}
+  .legend span{display:inline-flex;align-items:center;gap:7px;font-family:"Barlow Semi Condensed",sans-serif;font-size:.86rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+  .legend i{width:14px;height:14px;border-radius:3px;display:inline-block}
+
+  .filter{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 6px}
+  .filter span{font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:var(--royal);margin-right:6px;font-weight:600}
+  .filter button{font-family:"Barlow Semi Condensed",sans-serif;font-size:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:transparent;color:var(--royal-deep);border:1.5px solid var(--rule);border-radius:999px;padding:7px 16px;cursor:pointer}
+  .filter button:hover{border-color:var(--royal)}
+  .filter button[aria-pressed="true"]{background:var(--royal-deep);border-color:var(--royal-deep);color:#fff}
+  .filter button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .week{margin-top:26px}
+  .week-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--royal-deep);padding-bottom:6px;margin-bottom:14px}
+  .week-head .n{font-family:"Fraunces",serif;font-weight:900;font-size:1.5rem;color:var(--royal-deep)}
+  .week-head .d{font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;color:var(--royal);font-weight:600}
+  .week-head .tag{margin-left:auto;font-family:"Barlow Semi Condensed",sans-serif;font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--gold-deep);font-weight:700}
+  .lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+  .lane{background:#fff;border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+  .lane > h3{margin:0;padding:9px 14px;font-family:"Barlow Semi Condensed",sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#fff}
+  .lane > h3 span{font-weight:500;letter-spacing:.08em;opacity:.85}
+  .lane.jr > h3{background:var(--royal-light)}
+  .lane.ch > h3{background:var(--royal)}
+  .lane.fa > h3{background:var(--royal-deep)}
+
+  .day{padding:11px 14px 12px;border-top:1px solid rgba(14,35,88,.08);border-left:5px solid var(--k)}
+  .lane .day:first-of-type{border-top:none}
+  .day.k-hills{--k:var(--k-hills)}
+  .day.k-tempo{--k:var(--k-tempo)}
+  .day.k-track{--k:var(--k-track)}
+  .day.k-distance{--k:var(--k-distance)}
+  .day.k-shake{--k:var(--k-shake)}
+  .day.k-recovery{--k:var(--k-recovery)}
+  .daytop{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+  .dayname{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--royal-deep)}
+  .dayname small{font-weight:500;letter-spacing:.05em;color:rgba(20,25,43,.5)}
+  .chip{margin-left:auto;font-family:"Barlow Semi Condensed",sans-serif;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--k);padding:3px 9px;border-radius:999px;white-space:nowrap}
+  ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+  ol.steps li{position:relative;padding-left:20px;font-size:.94rem;margin-bottom:3px}
+  ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:.15em;font-family:"Barlow Semi Condensed",sans-serif;font-size:.68rem;font-weight:700;color:var(--k)}
+  .step-wu,.step-cd{color:rgba(20,25,43,.55);font-size:.86rem}
+  .step-main{font-weight:600;color:var(--ink)}
+  .step-main em{display:block;font-style:normal;font-weight:400;font-size:.85rem;color:rgba(20,25,43,.6);margin-top:1px}
+
+  .meet{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;background:var(--gold);color:var(--royal-deep);margin-top:26px;padding:16px 22px;border-radius:2px;border-left:10px solid var(--royal-deep)}
+  .meet .no{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.2em}
+  .meet .where{font-family:"Fraunces",serif;font-weight:700;font-size:1.35rem;line-height:1.1}
+  .meet .when{margin-left:auto;font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.9rem}
+
+  .notes{margin-top:44px;border-top:2px solid var(--royal-deep);padding-top:22px}
+  .notes h2{font-family:"Fraunces",serif;font-size:1.5rem;margin:0 0 14px;color:var(--royal-deep)}
+  .notes ul{margin:0;padding-left:20px;max-width:70ch}
+  .notes li{margin-bottom:9px}
+
+  .pdf-link{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:22px 0 0;padding:14px 18px;background:var(--royal-deep);border-radius:2px;border-left:6px solid var(--gold)}
+  .pdf-link a{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.95rem;color:var(--gold);text-decoration:none;border-bottom:2px solid rgba(228,178,60,.45)}
+  .pdf-link a:hover{border-bottom-color:var(--gold)}
+  .pdf-link span{font-size:.88rem;color:rgba(255,255,255,.7)}
+  /* view tabs */
+  .views{display:flex;gap:0;margin:26px 0 0;border-bottom:2px solid var(--royal-deep)}
+  .views button{font-family:"Barlow Semi Condensed",sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;background:transparent;border:none;border-bottom:4px solid transparent;color:rgba(20,25,43,.5);padding:10px 20px;cursor:pointer;margin-bottom:-2px}
+  .views button[aria-pressed="true"]{color:var(--royal-deep);border-bottom-color:var(--gold)}
+  .views button:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  body[data-view="plan"] #calendar{display:none}
+  body[data-view="calendar"] #plan{display:none}
+  body[data-view="calendar"] .filter{display:none}
+
+  /* calendar */
+  .cal-month{margin-top:28px}
+  .cal-month h3{font-family:"Fraunces",serif;font-weight:900;font-size:1.4rem;color:var(--royal-deep);margin:0 0 10px;border-bottom:2px solid var(--royal-deep);padding-bottom:6px}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .cal-dow{font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;font-weight:700;color:var(--royal);text-align:center;padding:4px 0}
+  .cal-cell{background:#fff;border:1px solid var(--rule);border-radius:2px;min-height:76px;padding:6px 7px;display:flex;flex-direction:column;gap:2px}
+  .cal-cell.muted{background:transparent;border-color:transparent}
+  .cal-num{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:.82rem;color:rgba(20,25,43,.45)}
+  .cal-cell[class*="k-"]{border-left:5px solid var(--k)}
+  .cal-cell[class*="k-"] .cal-num{color:var(--royal-deep)}
+  .cal-tag{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--k,var(--royal-deep));line-height:1.15}
+  .cal-sub{font-size:.68rem;color:rgba(20,25,43,.5);text-transform:uppercase;letter-spacing:.06em;font-family:"Barlow Semi Condensed",sans-serif}
+  .cal-cell.cal-meet{background:var(--gold);border-color:var(--gold-deep);border-left:5px solid var(--royal-deep)}
+  .cal-cell.cal-meet .cal-num,.cal-cell.cal-meet .cal-tag,.cal-cell.cal-meet .cal-sub{color:var(--royal-deep)}
+  .cal-cell.cal-meet .cal-tag{font-size:.78rem}
+  @media (max-width:700px){
+    .cal-cell{min-height:58px;padding:4px 5px}
+    .cal-tag{font-size:.6rem}
+    .cal-sub{display:none}
+  }
+
+  body[data-show="jr"] .lane:not(.jr),
+  body[data-show="ch"] .lane:not(.ch),
+  body[data-show="fa"] .lane:not(.fa){display:none}
+  body[data-show="jr"] .lanes,
+  body[data-show="ch"] .lanes,
+  body[data-show="fa"] .lanes{grid-template-columns:1fr}
+
+  @media (max-width:820px){
+    .lanes,.pennants{grid-template-columns:1fr}
+    .pennant{clip-path:polygon(0 0,100% 0,100% 100%,50% 92%,0 100%);padding-bottom:28px}
+    .meet .when{margin-left:0;width:100%}
+  }
+  @media print{
+    body{background:#fff}
+    .filter{display:none}
+    .week,.lane{break-inside:avoid}
+    .crest{padding-top:24px}
+  }
+</style>
+</head>
+<body data-show="all" data-view="plan">
+
+<header class="crest">
+  <div class="crest-inner">
+    <p class="eyebrow">St. Thomas More Cathedral School</p>
+    <h1>Running<em>Royals</em></h1>
+    <p class="season">Cross Country · Aug 30 – Nov 7, 2026 · Wed / Fri / Sun</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="ritual">
+    <h2>Every practice, every group</h2>
+    <p><strong>1.</strong> Warm-up laps + drills &nbsp;·&nbsp; <strong>2.</strong> The workout &nbsp;·&nbsp; <strong>3.</strong> Cool down and stretch. Warm-up is 1 lap for Jackrabbits, 2 laps for Cheetahs and Falcons.</p>
+  </div>
+
+  <div class="pennants">
+    <div class="pennant p-jr">
+      <div class="grade">3rd and 4th Grade</div>
+      <div class="name">Jackrabbits</div>
+      <div class="note">Short bursts, long rests, lots of fun. Quick off the line.</div>
+    </div>
+    <div class="pennant p-ch">
+      <div class="grade">5th and 6th Grade</div>
+      <div class="name">Cheetahs</div>
+      <div class="note">Learning to hold a pace, then close hard.</div>
+    </div>
+    <div class="pennant p-fa">
+      <div class="grade">7th and 8th Grade</div>
+      <div class="name">Falcons</div>
+      <div class="note">Real mileage, real tempo. Racing with a plan.</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <b>Workout type</b>
+    <span><i style="background:var(--k-hills)"></i>Hills</span>
+    <span><i style="background:var(--k-tempo)"></i>Tempo</span>
+    <span><i style="background:var(--k-track)"></i>Track</span>
+    <span><i style="background:var(--k-distance)"></i>Distance</span>
+    <span><i style="background:var(--k-shake)"></i>Shakeout</span>
+    <span><i style="background:var(--k-recovery)"></i>Recovery</span>
+  </div>
+
+  <div class="pdf-link">
+    <a href="running-royals-family-schedule.pdf">Download the family schedule (PDF)</a>
+    <span>Two pages: season calendar, what to bring, meet-day notes.</span>
+  </div>
+
+  <div class="views">
+    <button type="button" data-view="plan" aria-pressed="true">Practice plan</button>
+    <button type="button" data-view="calendar" aria-pressed="false">Calendar</button>
+  </div>
+
+  <div class="filter">
+    <span>Show</span>
+    <button type="button" data-group="all" aria-pressed="true">All groups</button>
+    <button type="button" data-group="jr" aria-pressed="false">Jackrabbits</button>
+    <button type="button" data-group="ch" aria-pressed="false">Cheetahs</button>
+    <button type="button" data-group="fa" aria-pressed="false">Falcons</button>
+  </div>
+
+<div id="plan">
+  <section class="week">
+    <div class="week-head"><span class="n">Week 1</span><span class="d">Aug 30 – Sep 4</span><span class="tag">First practice</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Aug 30</small></span><span class="chip">Getting started</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">4 × 100m relaxed<em>Walk 100m between. Learn the pace, not the pain</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 2</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">3 hills<em>Walk all the way down. The walk is the rest</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 4</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">1 mile easy<em>Stay together as a pack</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Aug 30</small></span><span class="chip">Getting started</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">4 × 200m relaxed<em>Walk 200m between</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 2</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">4 hills<em>Walk all the way down. The walk is the rest</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 4</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1.5 miles easy<em>Stay together as a pack</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Aug 30</small></span><span class="chip">Getting started</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 × 200m relaxed<em>Walk 200m between</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 2</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 hills<em>Walk all the way down. The walk is the rest</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 4</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles easy<em>Stay together as a pack</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 2</span><span class="d">Sep 6 – 11</span><span class="tag">First ladder</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 6</small></span><span class="chip">Ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">Ladder: 100 · 200 · 300 · 200 · 100<em>Walk the same distance you just ran</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 9</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">Tempo: 4 minutes steady<em>Should be able to talk in short sentences</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 11</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">1 mile<em>Buddy run, pair up, nobody gets dropped</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 6</small></span><span class="chip">Ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Ladder: 100 · 200 · 400 · 200 · 100<em>Walk the same distance you just ran</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 9</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 6 minutes steady<em>Should be able to talk in short sentences</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 11</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1.5 miles<em>Buddy run, pair up, nobody gets dropped</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 6</small></span><span class="chip">Ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Ladder: 200 · 400 · 600 · 400 · 200<em>Walk the same distance you just ran</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 9</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 8 minutes steady<em>Should be able to talk in short sentences</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 11</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Buddy run, pair up, nobody gets dropped</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 3</span><span class="d">Sep 13 – 18</span><span class="tag">Meet week</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 13</small></span><span class="chip">Race pace</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">3 × 200m at race pace<em>Practice starting under control</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 16</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">4 hills<em>Short steps, arms pumping</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 18</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">½ mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 13</small></span><span class="chip">Race pace</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">4 × 400m at race pace<em>Practice starting under control</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 16</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 hills<em>Short steps, arms pumping</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 18</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1 mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 13</small></span><span class="chip">Race pace</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">4 × 400m at race pace<em>Practice starting under control</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 16</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 hills<em>Short steps, arms pumping</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 18</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1 mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="meet">
+    <span class="no">Meet 1</span>
+    <span class="where">Paul VI High School</span>
+    <span class="when">Sat · Sep 19</span>
+  </div>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 4</span><span class="d">Sep 20 – 25</span><span class="tag">Recover, then build</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-recovery">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 20</small></span><span class="chip">Recovery + relays</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">6 × 100m strides, then team relay races<em>Fun day, shake out the meet</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 23</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">Tempo: 5 minutes<em>Out-and-back: turn at halfway, come home even</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 25</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">1.5 miles<em>Trail loop, easy effort</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-recovery">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 20</small></span><span class="chip">Recovery + relays</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">8 × 100m strides, then 4 × 100m relay<em>Fun day, shake out the meet</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 23</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 8 minutes<em>Out-and-back: turn at halfway, come home even</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 25</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Trail loop, easy effort</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-recovery">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 20</small></span><span class="chip">Recovery + relays</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">8 × 100m strides, then 4 × 200m relay<em>Fun day, shake out the meet</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 23</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 10 minutes<em>Out-and-back: turn at halfway, come home even</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Sep 25</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Trail loop, easy effort</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 5</span><span class="d">Sep 27 – Oct 2</span><span class="tag">800s arrive</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 27</small></span><span class="chip">Ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">Ladder: 100 · 200 · 400 · 200 · 100<em>Longest rep in the middle</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 30</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">5 hills<em>Last two are a friendly race to the top</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 2</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">1.5 miles<em>Course simulation: run it like a race course</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 27</small></span><span class="chip">Ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Ladder: 200 · 400 · 600 · 400 · 200<em>Longest rep in the middle</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 30</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 hills<em>Last two are a friendly race to the top</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 2</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Course simulation: run it like a race course</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Sep 27</small></span><span class="chip">Ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Ladder: 400 · 600 · 800 · 600 · 400<em>First 800 of the season, even effort</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Sep 30</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">8 hills<em>Last two are a friendly race to the top</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 2</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">3 miles<em>Course simulation: run it like a race course</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 6</span><span class="d">Oct 4 – 9</span><span class="tag">Fartlek Sunday</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 4</small></span><span class="chip">Fartlek</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">8 min fartlek: 30 sec fast / 1 min easy<em>Coach calls the whistle, no watches needed</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 7</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">Tempo: 6 minutes<em>Progression: start easy, finish strong</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 9</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">1.5 miles<em>Rolling loop, steady the whole way</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 4</small></span><span class="chip">Fartlek</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">10 min fartlek: 1 min fast / 1 min easy<em>Coach calls the whistle, no watches needed</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 7</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 10 minutes<em>Progression: start easy, finish strong</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 9</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Rolling loop, steady the whole way</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 4</small></span><span class="chip">Fartlek</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">12 min fartlek: 1 min fast / 1 min easy<em>Coach calls the whistle, no watches needed</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 7</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 12 minutes<em>Progression: start easy, finish strong</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 9</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Rolling loop, steady the whole way</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 7</span><span class="d">Oct 11 – 16</span><span class="tag">Meet week</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 11</small></span><span class="chip">Race pace</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">4 × 200m at race pace<em>Rehearse the first 200m of the race</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 14</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">4 hills<em>Short and sharp, about 15 seconds of effort</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 16</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">½ mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 11</small></span><span class="chip">Race pace</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">5 × 400m at race pace<em>Rehearse the first 400m of the race</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 14</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">5 hills<em>Short and sharp, about 15 seconds of effort</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 16</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1 mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 11</small></span><span class="chip">Race pace</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 × 400m at race pace<em>Rehearse the first 400m of the race</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 14</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 hills<em>Short and sharp, about 15 seconds of effort</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 16</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1 mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="meet">
+    <span class="no">Meet 2</span>
+    <span class="where">Lake Fairfax Park</span>
+    <span class="when">Sat · Oct 17</span>
+  </div>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 8</span><span class="d">Oct 18 – 23</span><span class="tag">Biggest week</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 18</small></span><span class="chip">Full ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">Ladder: 200 · 400 · 600 · 400 · 200<em>Up and back down. The middle one is the big one</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 21</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">Tempo: 6 minutes<em>Steady on the grass loop</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 23</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">1.5 miles<em>Longest of the season, keep it easy</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 18</small></span><span class="chip">Full ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Ladder: 200 · 400 · 800 · 400 · 200<em>Up and back down. The 800 is the big one</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 21</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 10 minutes<em>Steady on the grass loop</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 23</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Longest of the season, keep it easy</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 18</small></span><span class="chip">Full ladder</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Ladder: 200 · 400 · 600 · 800 · 600 · 400 · 200<em>The full pyramid, season centerpiece</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-tempo">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 21</small></span><span class="chip">Tempo</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">Tempo: 14 minutes<em>Steady on the grass loop</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 23</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">3 miles<em>Longest of the season, keep it easy</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 9</span><span class="d">Oct 25 – 30</span><span class="tag">Cut-downs</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 25</small></span><span class="chip">Cut-downs</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">6 × 100m, each one a little quicker<em>Full walk back between reps</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 28</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">6 hills<em>Hill relay: tag off at the bottom</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 30</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">1.5 miles<em>Pack run, finish with 4 strides</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 25</small></span><span class="chip">Cut-downs</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">6 × 200m, each one a little quicker<em>Full walk back between reps</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 28</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">8 hills<em>Hill relay: tag off at the bottom</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 30</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Pack run, finish with 4 strides</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Oct 25</small></span><span class="chip">Cut-downs</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">8 × 200m, each one a little quicker<em>Full walk back between reps</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Oct 28</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">10 hills<em>Hill relay: tag off at the bottom</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-distance">
+            <div class="daytop"><span class="dayname">Fri <small>Oct 30</small></span><span class="chip">Distance</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">2 miles<em>Pack run, finish with 4 strides</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="week">
+    <div class="week-head"><span class="n">Week 10</span><span class="d">Nov 1 – 6</span><span class="tag">Sharpen · last meet</span></div>
+    <div class="lanes">
+      <article class="lane jr"><h3>Jackrabbits <span>· 3rd and 4th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Nov 1</small></span><span class="chip">Sharpen</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">2 × 200m sharp, then done<em>Leave feeling fast, not tired</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Nov 4</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">3 hills<em>Easy effort, just wake the legs up</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Nov 6</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 1 lap + drills</li>
+              <li class="step-main">½ mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane ch"><h3>Cheetahs <span>· 5th and 6th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Nov 1</small></span><span class="chip">Sharpen</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">3 × 400m sharp, then done<em>Leave feeling fast, not tired</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Nov 4</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">4 hills<em>Easy effort, just wake the legs up</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Nov 6</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1 mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+      <article class="lane fa"><h3>Falcons <span>· 7th and 8th Grade</span></h3>
+          <div class="day k-track">
+            <div class="daytop"><span class="dayname">Sun <small>Nov 1</small></span><span class="chip">Sharpen</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">3 × 400m sharp, then done<em>Leave feeling fast, not tired</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-hills">
+            <div class="daytop"><span class="dayname">Wed <small>Nov 4</small></span><span class="chip">Hills</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">5 hills<em>Easy effort, just wake the legs up</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+          <div class="day k-shake">
+            <div class="daytop"><span class="dayname">Fri <small>Nov 6</small></span><span class="chip">Shakeout</span></div>
+            <ol class="steps">
+              <li class="step-wu">Warm-up: 2 laps + drills</li>
+              <li class="step-main">1 mile easy + 4 strides<em>Legs fresh for Saturday</em></li>
+              <li class="step-cd">Cool down + stretch</li>
+            </ol>
+          </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="meet">
+    <span class="no">Meet 3</span>
+    <span class="where">Fort Hunt Park</span>
+    <span class="when">Sat · Nov 7</span>
+  </div>
+
+
+</div>
+
+<div id="calendar">
+  <section class="cal-month">
+    <h3>August 2026</h3>
+    <div class="cal-grid">
+      <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div><div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+      <div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell"><span class="cal-num">1</span></div><div class="cal-cell"><span class="cal-num">2</span></div><div class="cal-cell"><span class="cal-num">3</span></div><div class="cal-cell"><span class="cal-num">4</span></div><div class="cal-cell"><span class="cal-num">5</span></div><div class="cal-cell"><span class="cal-num">6</span></div><div class="cal-cell"><span class="cal-num">7</span></div><div class="cal-cell"><span class="cal-num">8</span></div><div class="cal-cell"><span class="cal-num">9</span></div><div class="cal-cell"><span class="cal-num">10</span></div><div class="cal-cell"><span class="cal-num">11</span></div><div class="cal-cell"><span class="cal-num">12</span></div><div class="cal-cell"><span class="cal-num">13</span></div><div class="cal-cell"><span class="cal-num">14</span></div><div class="cal-cell"><span class="cal-num">15</span></div><div class="cal-cell"><span class="cal-num">16</span></div><div class="cal-cell"><span class="cal-num">17</span></div><div class="cal-cell"><span class="cal-num">18</span></div><div class="cal-cell"><span class="cal-num">19</span></div><div class="cal-cell"><span class="cal-num">20</span></div><div class="cal-cell"><span class="cal-num">21</span></div><div class="cal-cell"><span class="cal-num">22</span></div><div class="cal-cell"><span class="cal-num">23</span></div><div class="cal-cell"><span class="cal-num">24</span></div><div class="cal-cell"><span class="cal-num">25</span></div><div class="cal-cell"><span class="cal-num">26</span></div><div class="cal-cell"><span class="cal-num">27</span></div><div class="cal-cell"><span class="cal-num">28</span></div><div class="cal-cell"><span class="cal-num">29</span></div><div class="cal-cell k-track"><span class="cal-num">30</span><span class="cal-tag">Getting started</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">31</span></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div>
+    </div>
+  </section>
+  <section class="cal-month">
+    <h3>September 2026</h3>
+    <div class="cal-grid">
+      <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div><div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+      <div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell"><span class="cal-num">1</span></div><div class="cal-cell k-hills"><span class="cal-num">2</span><span class="cal-tag">Hills</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">3</span></div><div class="cal-cell k-distance"><span class="cal-num">4</span><span class="cal-tag">Distance</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">5</span></div><div class="cal-cell k-track"><span class="cal-num">6</span><span class="cal-tag">Ladder</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">7</span></div><div class="cal-cell"><span class="cal-num">8</span></div><div class="cal-cell k-tempo"><span class="cal-num">9</span><span class="cal-tag">Tempo</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">10</span></div><div class="cal-cell k-distance"><span class="cal-num">11</span><span class="cal-tag">Distance</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">12</span></div><div class="cal-cell k-track"><span class="cal-num">13</span><span class="cal-tag">Race pace</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">14</span></div><div class="cal-cell"><span class="cal-num">15</span></div><div class="cal-cell k-hills"><span class="cal-num">16</span><span class="cal-tag">Hills</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">17</span></div><div class="cal-cell k-shake"><span class="cal-num">18</span><span class="cal-tag">Shakeout</span><span class="cal-sub">Practice</span></div><div class="cal-cell cal-meet"><span class="cal-num">19</span><span class="cal-tag">Meet 1</span><span class="cal-sub">Paul VI HS</span></div><div class="cal-cell k-recovery"><span class="cal-num">20</span><span class="cal-tag">Recovery + relays</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">21</span></div><div class="cal-cell"><span class="cal-num">22</span></div><div class="cal-cell k-tempo"><span class="cal-num">23</span><span class="cal-tag">Tempo</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">24</span></div><div class="cal-cell k-distance"><span class="cal-num">25</span><span class="cal-tag">Distance</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">26</span></div><div class="cal-cell k-track"><span class="cal-num">27</span><span class="cal-tag">Ladder</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">28</span></div><div class="cal-cell"><span class="cal-num">29</span></div><div class="cal-cell k-hills"><span class="cal-num">30</span><span class="cal-tag">Hills</span><span class="cal-sub">Practice</span></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div>
+    </div>
+  </section>
+  <section class="cal-month">
+    <h3>October 2026</h3>
+    <div class="cal-grid">
+      <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div><div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+      <div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell"><span class="cal-num">1</span></div><div class="cal-cell k-distance"><span class="cal-num">2</span><span class="cal-tag">Distance</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">3</span></div><div class="cal-cell k-track"><span class="cal-num">4</span><span class="cal-tag">Fartlek</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">5</span></div><div class="cal-cell"><span class="cal-num">6</span></div><div class="cal-cell k-tempo"><span class="cal-num">7</span><span class="cal-tag">Tempo</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">8</span></div><div class="cal-cell k-distance"><span class="cal-num">9</span><span class="cal-tag">Distance</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">10</span></div><div class="cal-cell k-track"><span class="cal-num">11</span><span class="cal-tag">Race pace</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">12</span></div><div class="cal-cell"><span class="cal-num">13</span></div><div class="cal-cell k-hills"><span class="cal-num">14</span><span class="cal-tag">Hills</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">15</span></div><div class="cal-cell k-shake"><span class="cal-num">16</span><span class="cal-tag">Shakeout</span><span class="cal-sub">Practice</span></div><div class="cal-cell cal-meet"><span class="cal-num">17</span><span class="cal-tag">Meet 2</span><span class="cal-sub">Lake Fairfax</span></div><div class="cal-cell k-track"><span class="cal-num">18</span><span class="cal-tag">Full ladder</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">19</span></div><div class="cal-cell"><span class="cal-num">20</span></div><div class="cal-cell k-tempo"><span class="cal-num">21</span><span class="cal-tag">Tempo</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">22</span></div><div class="cal-cell k-distance"><span class="cal-num">23</span><span class="cal-tag">Distance</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">24</span></div><div class="cal-cell k-track"><span class="cal-num">25</span><span class="cal-tag">Cut-downs</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">26</span></div><div class="cal-cell"><span class="cal-num">27</span></div><div class="cal-cell k-hills"><span class="cal-num">28</span><span class="cal-tag">Hills</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">29</span></div><div class="cal-cell k-distance"><span class="cal-num">30</span><span class="cal-tag">Distance</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">31</span></div>
+    </div>
+  </section>
+  <section class="cal-month">
+    <h3>November 2026</h3>
+    <div class="cal-grid">
+      <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div><div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+      <div class="cal-cell k-track"><span class="cal-num">1</span><span class="cal-tag">Sharpen</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">2</span></div><div class="cal-cell"><span class="cal-num">3</span></div><div class="cal-cell k-hills"><span class="cal-num">4</span><span class="cal-tag">Hills</span><span class="cal-sub">Practice</span></div><div class="cal-cell"><span class="cal-num">5</span></div><div class="cal-cell k-shake"><span class="cal-num">6</span><span class="cal-tag">Shakeout</span><span class="cal-sub">Practice</span></div><div class="cal-cell cal-meet"><span class="cal-num">7</span><span class="cal-tag">Meet 3</span><span class="cal-sub">Fort Hunt Park</span></div><div class="cal-cell"><span class="cal-num">8</span></div><div class="cal-cell"><span class="cal-num">9</span></div><div class="cal-cell"><span class="cal-num">10</span></div><div class="cal-cell"><span class="cal-num">11</span></div><div class="cal-cell"><span class="cal-num">12</span></div><div class="cal-cell"><span class="cal-num">13</span></div><div class="cal-cell"><span class="cal-num">14</span></div><div class="cal-cell"><span class="cal-num">15</span></div><div class="cal-cell"><span class="cal-num">16</span></div><div class="cal-cell"><span class="cal-num">17</span></div><div class="cal-cell"><span class="cal-num">18</span></div><div class="cal-cell"><span class="cal-num">19</span></div><div class="cal-cell"><span class="cal-num">20</span></div><div class="cal-cell"><span class="cal-num">21</span></div><div class="cal-cell"><span class="cal-num">22</span></div><div class="cal-cell"><span class="cal-num">23</span></div><div class="cal-cell"><span class="cal-num">24</span></div><div class="cal-cell"><span class="cal-num">25</span></div><div class="cal-cell"><span class="cal-num">26</span></div><div class="cal-cell"><span class="cal-num">27</span></div><div class="cal-cell"><span class="cal-num">28</span></div><div class="cal-cell"><span class="cal-num">29</span></div><div class="cal-cell"><span class="cal-num">30</span></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div><div class="cal-cell muted"></div>
+    </div>
+  </section>
+
+</div>
+
+  <section class="notes">
+    <h2>Coaching notes</h2>
+    <ul>
+      <li><strong>Drills</strong> stay the same all season so the kids learn them: high knees, butt kicks, A-skips, side shuffles, karaoke, then 2 strides. About five minutes.</li>
+      <li><strong>Stretching</strong> closes every practice: quads, hamstrings, calves, hip flexors, held 20 seconds each, sitting in a circle. This is also the time to hand out reminders about the next meet.</li>
+      <li><strong>Hill repeats</strong> mean run up hard, walk all the way down. The walk is the rest; don't rush it. Use the same hill every week so runners can feel themselves improve.</li>
+      <li><strong>Track ladders</strong> build up to the longest rep and come back down. Rest is a walk of the same distance just run. If they can't talk during the walk, the rep was too fast.</li>
+      <li><strong>Meet-week Fridays</strong> swap the distance run for a short shakeout. Kids race far better on fresh legs and lose nothing in fitness.</li>
+      <li><strong>Lake Fairfax and Fort Hunt</strong> are grass-and-hill courses, so the hill days in weeks 7 and 9 are doing real work. Run them on similar terrain when you can.</li>
+      <li><strong>Moving a runner up or down a group</strong> is fine. Go by what a runner can finish comfortably, not by grade alone.</li>
+    </ul>
+  </section>
+
+</div>
+
+<script>
+  const viewButtons = document.querySelectorAll('.views button');
+  viewButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      viewButtons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      document.body.dataset.view = btn.dataset.view;
+    });
+  });
+
+  const buttons = document.querySelectorAll('.filter button');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      document.body.dataset.show = btn.dataset.group;
+    });
+  });
+</script>
+</body>
+</html>
