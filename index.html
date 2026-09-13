@@ -76,7 +76,7 @@
 
   .day{padding:11px 14px 12px;border-top:1px solid rgba(14,35,88,.08);border-left:5px solid var(--k);position:relative}
   .lane .day:first-of-type{border-top:none}
-  .day.is-past,.meet.is-past{display:none}
+  .day.is-past,.meet.is-past,.meet-details.is-past{display:none}
   .week.is-done{display:none}
   .day.is-next{background:rgba(228,178,60,.1)}
   .day.is-next::after{content:"Next up";position:absolute;top:-9px;right:12px;background:var(--gold-deep);color:#fff;font-family:"Barlow Semi Condensed",sans-serif;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 9px;border-radius:999px}
@@ -96,10 +96,19 @@
   .step-wu,.step-cd{color:rgba(20,25,43,.55);font-size:.86rem}
   .step-main{font-weight:600;color:var(--ink)}
   .step-main em{display:block;font-style:normal;font-weight:400;font-size:.85rem;color:rgba(20,25,43,.6);margin-top:1px}
+  .leaders{margin-top:8px;padding-top:7px;border-top:1px dashed var(--rule);font-family:"Barlow Semi Condensed",sans-serif;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--royal);font-weight:600}
 
   .meet{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;background:var(--gold);color:var(--royal-deep);margin-top:26px;padding:16px 22px;border-radius:2px;border-left:10px solid var(--royal-deep)}
+  .meet.has-details{border-radius:2px 2px 0 0;margin-bottom:0}
   .meet .no{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.2em}
   .meet .where{font-family:"Fraunces",serif;font-weight:700;font-size:1.35rem;line-height:1.1}
+  .meet-details{background:#fff;border:1px solid var(--rule);border-top:none;border-left:10px solid var(--royal-deep);border-radius:0 0 2px 2px;padding:16px 22px}
+  .meet-details h4{margin:0 0 8px;font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;color:var(--royal-deep)}
+  .meet-details p{margin:0 0 10px;font-size:.92rem;max-width:70ch}
+  .meet-details ul{margin:0 0 10px;padding-left:20px;columns:2;column-gap:24px}
+  .meet-details li{margin-bottom:4px;font-size:.9rem;break-inside:avoid}
+  .meet-details a{color:var(--royal);font-weight:600}
+  @media (max-width:600px){.meet-details ul{columns:1}}
   .meet .when{margin-left:auto;font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.9rem}
 
   .notes{margin-top:44px;border-top:2px solid var(--royal-deep);padding-top:22px}
@@ -358,6 +367,7 @@
               <li class="step-main">1 mile, timed<em>Season benchmark &mdash; run steady and remember your time</em></li>
               <li class="step-cd">Cool down + stretch</li>
             </ol>
+            <div class="leaders">Led by Denise, Jen &amp; Kevin</div>
           </div>
           <div class="day k-hills" data-date="2026-09-16">
             <div class="daytop"><span class="dayname">Wed <small>Sep 16</small></span><span class="chip">Hills</span></div>
@@ -384,6 +394,7 @@
               <li class="step-main">1 mile, timed<em>Season benchmark &mdash; run steady and remember your time</em></li>
               <li class="step-cd">Cool down + stretch</li>
             </ol>
+            <div class="leaders">Led by Coach John, Tom &amp; Steve</div>
           </div>
           <div class="day k-hills" data-date="2026-09-16">
             <div class="daytop"><span class="dayname">Wed <small>Sep 16</small></span><span class="chip">Hills</span></div>
@@ -405,10 +416,24 @@
     </div>
   </section>
 
-  <div class="meet" data-date="2026-09-19">
-    <span class="no">Meet 1</span>
-    <span class="where">Paul VI High School</span>
+  <div class="meet has-details" data-date="2026-09-19">
+    <span class="no">Meet 1 · NVJCYO Championship</span>
+    <span class="where">Saint Paul VI Catholic HS</span>
     <span class="when">Sat · Sep 19</span>
+  </div>
+  <div class="meet-details" data-date="2026-09-19">
+    <h4>Meet day details</h4>
+    <p>42341 Braddock Road, Chantilly, VA. Packet pickup and course walk-through open at <strong>7:15am</strong>; coaches meeting 8:10am; course clears 8:20am. Races run by grade, not practice group &mdash; times are tentative (&plusmn;5&ndash;10 min) and races will not be held for late runners.</p>
+    <ul>
+      <li><strong>8:30am</strong> JV Girls (5th&ndash;6th) &middot; 3K</li>
+      <li><strong>9:00am</strong> JV Boys (5th&ndash;6th) &middot; 3K</li>
+      <li><strong>9:30am</strong> Varsity Girls (7th&ndash;8th) &middot; 4K</li>
+      <li><strong>10:00am</strong> Varsity Boys (7th&ndash;8th) &middot; 4K</li>
+      <li><strong>10:30am</strong> Frosh Girls (3rd&ndash;4th) &middot; 2K</li>
+      <li><strong>10:55am</strong> Frosh Boys (3rd&ndash;4th) &middot; 2K</li>
+    </ul>
+    <p>No headphones on course. Spikes are allowed only with blanks (no metal spikes). Park in designated spots only, and please help pack out your family's trash.</p>
+    <a href="2026-meet1-paul-vi-info.pdf">Full meet info &amp; rules (PDF)</a>
   </div>
 
   <section class="week">
@@ -903,7 +928,7 @@
     document.querySelectorAll('.day[data-date]').forEach(el => {
       if (el.dataset.date < today) el.classList.add('is-past');
     });
-    document.querySelectorAll('.meet[data-date]').forEach(el => {
+    document.querySelectorAll('.meet[data-date], .meet-details[data-date]').forEach(el => {
       if (el.dataset.date < today) el.classList.add('is-past');
     });
     document.querySelectorAll('.cal-cell[data-date]').forEach(el => {
