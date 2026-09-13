@@ -76,7 +76,7 @@
 
   .day{padding:11px 14px 12px;border-top:1px solid rgba(14,35,88,.08);border-left:5px solid var(--k);position:relative}
   .lane .day:first-of-type{border-top:none}
-  .day.is-past,.meet.is-past,.meet-details.is-past{display:none}
+  .day.is-past,.meet.is-past,.meet-details.is-past,.volunteer-panel.is-past{display:none}
   .week.is-done{display:none}
   .day.is-next{background:rgba(228,178,60,.1)}
   .day.is-next::after{content:"Next up";position:absolute;top:-9px;right:12px;background:var(--gold-deep);color:#fff;font-family:"Barlow Semi Condensed",sans-serif;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 9px;border-radius:999px}
@@ -110,6 +110,21 @@
   .meet-details a{color:var(--royal);font-weight:600}
   @media (max-width:600px){.meet-details ul{columns:1}}
   .meet .when{margin-left:auto;font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.9rem}
+
+  .volunteer-panel{background:#fff;border:1px solid var(--rule);border-left:6px solid var(--gold-deep);border-radius:2px;padding:20px 22px;margin-top:16px}
+  .volunteer-panel h4{margin:0 0 4px;font-family:"Barlow Semi Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;color:var(--royal-deep)}
+  .volunteer-panel p.sub{margin:0 0 16px;font-size:.9rem;color:rgba(20,25,43,.65);max-width:60ch}
+  .vol-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .vol-field{flex:1 1 220px;display:flex;flex-direction:column;gap:4px}
+  .vol-field label{font-family:"Barlow Semi Condensed",sans-serif;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--royal);font-weight:600}
+  .vol-field input,.vol-field textarea{font:inherit;font-size:.92rem;padding:8px 10px;border:1px solid var(--rule);border-radius:2px;background:var(--parchment);color:var(--ink)}
+  .vol-field textarea{resize:vertical;min-height:52px}
+  .vol-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:14px}
+  .vol-slots label{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;background:var(--parchment);border:1px solid var(--rule);border-radius:2px;padding:8px 10px;cursor:pointer}
+  .vol-slots input{margin-top:3px}
+  .volunteer-panel button{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.85rem;background:var(--royal-deep);color:#fff;border:none;border-radius:999px;padding:10px 22px;cursor:pointer}
+  .volunteer-panel button:hover{background:var(--royal)}
+  .volunteer-panel .vol-note{margin-top:10px;font-size:.78rem;color:rgba(20,25,43,.5)}
 
   .notes{margin-top:44px;border-top:2px solid var(--royal-deep);padding-top:22px}
   .notes h2{font-family:"Fraunces",serif;font-size:1.5rem;margin:0 0 14px;color:var(--royal-deep)}
@@ -434,6 +449,40 @@
     </ul>
     <p>No headphones on course. Spikes are allowed only with blanks (no metal spikes). Park in designated spots only, and please help pack out your family's trash.</p>
     <a href="2026-meet1-paul-vi-info.pdf">Full meet info &amp; rules (PDF)</a>
+  </div>
+
+  <div class="volunteer-panel" data-date="2026-09-19">
+    <h4>🙋 Volunteer: Course marshals needed for Meet 1</h4>
+    <p class="sub">We need parents posted at key points on the course to keep runners on track. Pick whichever shift(s) work for you &mdash; fill this out and it'll open an email to the coaches to confirm your spot.</p>
+    <div class="vol-row">
+      <div class="vol-field">
+        <label for="volName">Name</label>
+        <input type="text" id="volName" autocomplete="name">
+      </div>
+      <div class="vol-field">
+        <label for="volEmail">Email</label>
+        <input type="email" id="volEmail" autocomplete="email">
+      </div>
+      <div class="vol-field">
+        <label for="volPhone">Phone (optional)</label>
+        <input type="tel" id="volPhone" autocomplete="tel">
+      </div>
+    </div>
+    <div class="vol-slots">
+      <label><input type="checkbox" class="vol-slot" value="7:15-8:20am - Course setup &amp; walk-through">7:15&ndash;8:20am &mdash; Course setup &amp; walk-through</label>
+      <label><input type="checkbox" class="vol-slot" value="8:30-9:00am - JV Girls (3K)">8:30&ndash;9:00am &mdash; JV Girls (3K)</label>
+      <label><input type="checkbox" class="vol-slot" value="9:00-9:30am - JV Boys (3K)">9:00&ndash;9:30am &mdash; JV Boys (3K)</label>
+      <label><input type="checkbox" class="vol-slot" value="9:30-10:00am - Varsity Girls (4K)">9:30&ndash;10:00am &mdash; Varsity Girls (4K)</label>
+      <label><input type="checkbox" class="vol-slot" value="10:00-10:30am - Varsity Boys (4K)">10:00&ndash;10:30am &mdash; Varsity Boys (4K)</label>
+      <label><input type="checkbox" class="vol-slot" value="10:30-10:55am - Frosh Girls (2K)">10:30&ndash;10:55am &mdash; Frosh Girls (2K)</label>
+      <label><input type="checkbox" class="vol-slot" value="10:55-11:15am - Frosh Boys (2K)">10:55&ndash;11:15am &mdash; Frosh Boys (2K)</label>
+    </div>
+    <div class="vol-field" style="margin-bottom:14px">
+      <label for="volNotes">Notes (optional)</label>
+      <textarea id="volNotes"></textarea>
+    </div>
+    <button type="button" onclick="submitVolunteer()">Sign up via email</button>
+    <p class="vol-note">This opens your email app with everything filled in &mdash; just hit send. It goes straight to the coaches.</p>
   </div>
 
   <section class="week">
@@ -905,6 +954,34 @@
 </div>
 
 <script>
+  function submitVolunteer() {
+    const name = document.getElementById('volName').value.trim();
+    const email = document.getElementById('volEmail').value.trim();
+    const phone = document.getElementById('volPhone').value.trim();
+    const notes = document.getElementById('volNotes').value.trim();
+    const slots = Array.from(document.querySelectorAll('.vol-slot:checked')).map(cb => cb.value);
+
+    if (!name || !email || slots.length === 0) {
+      alert('Please add your name, email, and at least one shift before signing up.');
+      return;
+    }
+
+    const lines = [
+      'Name: ' + name,
+      'Email: ' + email,
+    ];
+    if (phone) lines.push('Phone: ' + phone);
+    lines.push('', 'Shift(s):');
+    slots.forEach(s => lines.push('- ' + s));
+    if (notes) lines.push('', 'Notes: ' + notes);
+
+    const subject = 'Course Marshal Sign-Up — ' + name;
+    const mailto = 'mailto:johnaiken4@gmail.com,acbrusch@hotmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(lines.join('\n'));
+    window.location.href = mailto;
+  }
+
   const viewButtons = document.querySelectorAll('.views button');
   viewButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -928,7 +1005,7 @@
     document.querySelectorAll('.day[data-date]').forEach(el => {
       if (el.dataset.date < today) el.classList.add('is-past');
     });
-    document.querySelectorAll('.meet[data-date], .meet-details[data-date]').forEach(el => {
+    document.querySelectorAll('.meet[data-date], .meet-details[data-date], .volunteer-panel[data-date]').forEach(el => {
       if (el.dataset.date < today) el.classList.add('is-past');
     });
     document.querySelectorAll('.cal-cell[data-date]').forEach(el => {
