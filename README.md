@@ -2,7 +2,7 @@
 
 Practice schedule for St. Thomas More Cathedral School cross country, fall 2026.
 
-- `index.html` is the full practice plan and calendar. Three age groups (Jackrabbits 3rd–4th, Cheetahs 5th–6th, Falcons 7th–8th), color-coded by workout type, with a group filter and a calendar view.
+- `index.html` is the full practice plan and calendar. Two age groups (Falcons 3rd–5th, Racoons 5th and up), color-coded by workout type, with a group filter and a calendar view.
 - `running-royals-family-schedule.pdf` is the two-page handout for parents.
 
 ## Publishing
